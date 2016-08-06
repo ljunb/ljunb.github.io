@@ -1,0 +1,808 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="React Native,iOS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="本Demo是基于公司项目业务需求的。由于项目中要接入IM模块，在自己的一番摸索后，决定采用原生来开发IM模块，这样可以大幅度的利用环信提供的EaseUI，节省开发时间。
+背景项目框架与大部分APP类似，底部由4个tab组成，其中一个tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native封装iOS原生UIViewController">
+<meta property="og:url" content="http://yoursite.com/2016/08/05/React-Native封装iOS原生UIViewController/index.html">
+<meta property="og:site_name" content="CookieJ's Blog">
+<meta property="og:description" content="本Demo是基于公司项目业务需求的。由于项目中要接入IM模块，在自己的一番摸索后，决定采用原生来开发IM模块，这样可以大幅度的利用环信提供的EaseUI，节省开发时间。
+背景项目框架与大部分APP类似，底部由4个tab组成，其中一个tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后">
+<meta property="og:image" content="http://i1.piimg.com/1949/90c0b3afe97302c3.png">
+<meta property="og:image" content="http://i4.piimg.com/1949/b110d1d21bf8c2a3.png">
+<meta property="og:image" content="http://i2.piimg.com/1949/4a5de7ae7c07909a.png">
+<meta property="og:updated_time" content="2016-08-06T10:29:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native封装iOS原生UIViewController">
+<meta name="twitter:description" content="本Demo是基于公司项目业务需求的。由于项目中要接入IM模块，在自己的一番摸索后，决定采用原生来开发IM模块，这样可以大幅度的利用环信提供的EaseUI，节省开发时间。
+背景项目框架与大部分APP类似，底部由4个tab组成，其中一个tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后">
+<meta name="twitter:image" content="http://i1.piimg.com/1949/90c0b3afe97302c3.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/05/React-Native封装iOS原生UIViewController/"/>
+
+  <title> React Native封装iOS原生UIViewController | CookieJ's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">CookieJ's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">React Native | iOS</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                React Native封装iOS原生UIViewController
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-05T12:41:19+08:00" content="2016-08-05">
+              2016-08-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/05/React-Native封装iOS原生UIViewController/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/05/React-Native封装iOS原生UIViewController/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/05/React-Native封装iOS原生UIViewController/" class="leancloud_visitors" data-flag-title="React Native封装iOS原生UIViewController">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本Demo是基于公司项目业务需求的。由于项目中要接入IM模块，在自己的一番摸索后，决定采用原生来开发IM模块，这样可以大幅度的利用环信提供的EaseUI，节省开发时间。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>项目框架与大部分APP类似，底部由4个tab组成，其中一个tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后台同事直接返回。好友列表将保持使用React Native来实现，而消息列表则计划用原生界面开发。本Demo只显示一个消息列表，以做演示。大家可以在这里查看<a href="https://github.com/ljunb/iOSNativeManagerDemo" target="_blank" rel="external">Demo源码</a>。</p>
+<a id="more"></a>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="1、初始化项目"><a href="#1、初始化项目" class="headerlink" title="1、初始化项目"></a>1、初始化项目</h3><p>关于React Native封装iOS原生UI，这里不做细述，可参考官方文档。其实本次demo对iOS原生UIViewController的封装，与原生UI封装方式相差不多。基本思路是在封装的原生UI中，添加需要显示的UIViewController，由原生UI持有该UIViewController。Demo使用到了react-native-scrollable-tab-view和react-native-vector-icons这两个组件，故在新建React Native项目后，安装组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ react-native init iOSNativeManagerDemo</div><div class="line">$ cd iOSNativeManagerDemo</div><div class="line">$ npm install react-native-scrollable-tab-view --save</div><div class="line">$ npm install react-native-vector-icons --save</div><div class="line">$ rnpm link</div></pre></td></tr></table></figure>
+<h3 id="2、搭建基本界面"><a href="#2、搭建基本界面" class="headerlink" title="2、搭建基本界面"></a>2、搭建基本界面</h3><p>Demo中自定义了一个CustomTabBar组件，用于展示APP中常见的上图片下文本的TabBar效果。在消息页面，将通过封装iOS原生ViewController的形式，用UITableView展示一个消息列表，基本界面如下：</p>
+<p><img src="http://i1.piimg.com/1949/90c0b3afe97302c3.png" alt="Markdown"></p>
+<p>到此，完成基本界面的搭建，接下来正式开始进行iOS原生UIViewController的封装。</p>
+<h3 id="3、新建RCTViewManager子类"><a href="#3、新建RCTViewManager子类" class="headerlink" title="3、新建RCTViewManager子类"></a>3、新建RCTViewManager子类</h3><p>React Native并不支持对UIViewController的直接封装，但是可以对原生UI进行封装。所以我的思路是先封装一个原生的MessageListView，然后在该视图里面，添加UIViewController的view，达到封装UIViewController的目的。在React Native对iOS原生UI的封装中，需要做到：</p>
+<blockquote>
+<ul>
+<li>创建一个RCTViewManager的子类</li>
+<li>添加RCT_EXPORT_MODULE()标记宏</li>
+<li>实现-(UIView *)view方法</li>
+</ul>
+</blockquote>
+<p>在该基础上，新建一个MessageView类，该类将用于持有最终要显示的UIViewController的view。在RCTMessageViewManager的-(UIView *)view方法中，返回MessageView实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// RCTMessageViewManager.h</div><div class="line">#import &quot;RCTMessageViewManager.h&quot;</div><div class="line">#import &quot;MessageView.h&quot;</div><div class="line"></div><div class="line">@implementation RCTMessageViewManager</div><div class="line">  </div><div class="line">RCT_EXPORT_MODULE()</div><div class="line">  </div><div class="line">- (UIView *)view &#123;</div><div class="line">    return [MessageView new];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<h3 id="4、在JavaScript中导出并使用MessageView"><a href="#4、在JavaScript中导出并使用MessageView" class="headerlink" title="4、在JavaScript中导出并使用MessageView"></a>4、在JavaScript中导出并使用MessageView</h3><p>在完成原生UI的封装后，还需要将该视图导出给JavaScript使用。为了在项目的一些界面使用该视图，可以将该视图处理成一个React组件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// MessageView.js</span></div><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> &#123; requireNativeComponent &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> RCTMessageView = requireNativeComponent(<span class="string">'RCTMessageView'</span>, MessageView);</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageView</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span> &lt;RCTMessageView &#123;...this.props&#125;/&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>MessageView.js的命名是随意的，与Xcode中的MessageView.h并无关系。这里要注意的是：</p>
+<blockquote>
+<p>如果RCT_EXPORT_MODULE()括号中提供了模块名称，requireNativeComponent接收的第一个参数名要与之对应，否则为RCTViewManager子类名称去掉Manager。</p>
+</blockquote>
+<p>为了验证效果，在MessageView.m文件的初始化方法中添加一个UILabel：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">// MessageView.m</div><div class="line">#import &quot;MessageView.h&quot;</div><div class="line"></div><div class="line">@implementation MessageView</div><div class="line"></div><div class="line">- (instancetype)init &#123;</div><div class="line">    if (self = [super init]) &#123;</div><div class="line">        UILabel * title = (&#123;</div><div class="line">            UILabel * label = [[UILabel alloc] init];</div><div class="line">            label.frame = CGRectMake(100, 100, 100, 100);</div><div class="line">            label.text = @&quot;我是原生UI&quot;;</div><div class="line">            label.textColor = [UIColor blackColor];</div><div class="line">            label.backgroundColor = [UIColor redColor];</div><div class="line">            </div><div class="line">            label;</div><div class="line">        &#125;);</div><div class="line">      </div><div class="line">        [self addSubview:title];</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://i4.piimg.com/1949/b110d1d21bf8c2a3.png" alt="Markdown"></p>
+<h3 id="5、添加UIViewController"><a href="#5、添加UIViewController" class="headerlink" title="5、添加UIViewController"></a>5、添加UIViewController</h3><p>有了原生UI封装的基础，就可以尝试添加UIViewController了。新建MessageViewController，注意不要继承自UITableViewController，而是继承UIViewController。我在实验过程中，发现添加继承自UITableViewController的类到UI时，显示的view占了两个屏幕的宽度，而继承UIViewController，自己设置好UITableView的宽高的话，就是想要的正常效果。如有朋友知道其中原因，欢迎提出。</p>
+<p>在MessageView.m文件中导入MessageViewController，声明成为自己的属性，并在初始化方法中持有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">// MessageView.m</div><div class="line">#import &quot;MessageView.h&quot;</div><div class="line">#import &quot;MessageViewController.h&quot;</div><div class="line"></div><div class="line">@interface MessageView ()</div><div class="line">@property (nonatomic, strong) MessageViewController * messageVC;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation MessageView</div><div class="line"></div><div class="line">- (instancetype)init &#123;</div><div class="line">    if (self = [super init]) &#123;</div><div class="line">        MessageViewController * messageVC = [[MessageViewController alloc] init];</div><div class="line">        self.messageVC = messageVC;</div><div class="line">        [self addSubview:messageVC.view];</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>到此，在Xcode重新编译运行，就可以看到MessageViewController所显示的界面了。另外要注意的一点是，在Message.js中，要设置MessageView组件的宽高，否则虽然可以看到MessageViewController的界面，但是没有在style里面设置宽高，是无法与该界面进行交互的。相应设置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Message.js</span></div><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> &#123;</div><div class="line">    StyleSheet,</div><div class="line">    View,</div><div class="line">    Text,</div><div class="line">&#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</div><div class="line"><span class="keyword">import</span> Dimensions <span class="keyword">from</span> <span class="string">'Dimensions'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> Header <span class="keyword">from</span> <span class="string">'../components/Header'</span>;</div><div class="line"><span class="keyword">import</span> MessageView <span class="keyword">from</span> <span class="string">'../components/MessageView'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Message</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line"></div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span> (</div><div class="line">            &lt;View style=&#123;&#123;flex: 1&#125;&#125;&gt;</div><div class="line">                &lt;Header title="消息列表"/&gt;</div><div class="line">                &lt;MessageView</div><div class="line">                    style=&#123;&#123;</div><div class="line">                        width: Dimensions.get('window').width,</div><div class="line">                        height: Dimensions.get('window').height</div><div class="line">                    &#125;&#125;</div><div class="line">                /&gt;</div><div class="line">            &lt;/View&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最终效果：</p>
+<p><img src="http://i2.piimg.com/1949/4a5de7ae7c07909a.png" alt="Markdown"></p>
+<h3 id="6、与原生UIViewController交互"><a href="#6、与原生UIViewController交互" class="headerlink" title="6、与原生UIViewController交互"></a>6、与原生UIViewController交互</h3><p>到这一步，可以来实现下一个需求：在消息列表中点击某一条消息，进入会话窗口。新建ChatViewController，在MessageViewController中导入使用，在相应的方法中，以模态形式展示界面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// MessageViewController.m</div><div class="line">- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">  </div><div class="line">    ChatViewController * chatVC = [[ChatViewController alloc] init];</div><div class="line">  </div><div class="line">    UIViewController * rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;</div><div class="line">  </div><div class="line">    [rootVC presentViewController:chatVC animated:YES completion:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>根据以上步骤，完成React Native对iOS原生UIViewController的封装。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>在React Native中接入原生IM是自己的第一次尝试。一开始项目中的会话列表打算采用React Native实现，然后以模态的方式进入原生的对话窗口（为达到UINavigationController的push效果，可自定义转场动画实现）。后来在react-native官方的Issues里面看到关于这个的讨论<a href="https://github.com/facebook/react-native/issues/1148" target="_blank" rel="external">Is it possible to push an existing native UIViewController to React-Native’s navigator stack </a>，就试着在UIView里面添加UIViewController，最后也算摸索出来了，值得记录下，希望也能帮助到其他朋友，实现类似需求。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React-Native/" rel="tag">#React Native</a>
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/23/生活无常，折腾是福/" rel="next" title="生活无常，折腾是福">
+                <i class="fa fa-chevron-left"></i> 生活无常，折腾是福
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/05/React-Native封装iOS原生UIViewController/"
+           data-title="React Native封装iOS原生UIViewController" data-url="http://yoursite.com/2016/08/05/React-Native封装iOS原生UIViewController/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i4.piimg.com/4851/154255b8582b8795.png"
+               alt="CookieJ" />
+          <p class="site-author-name" itemprop="name">CookieJ</p>
+          <p class="site-description motion-element" itemprop="description">Be stronger.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ljunb" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/rn-cookiej" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:l_junb@163.com" target="_blank" title="E-mail">
+                  
+                    <i class="fa fa-fw fa-envelope-square"></i>
+                  
+                  E-mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、初始化项目"><span class="nav-number">2.1.</span> <span class="nav-text">1、初始化项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、搭建基本界面"><span class="nav-number">2.2.</span> <span class="nav-text">2、搭建基本界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、新建RCTViewManager子类"><span class="nav-number">2.3.</span> <span class="nav-text">3、新建RCTViewManager子类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、在JavaScript中导出并使用MessageView"><span class="nav-number">2.4.</span> <span class="nav-text">4、在JavaScript中导出并使用MessageView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、添加UIViewController"><span class="nav-number">2.5.</span> <span class="nav-text">5、添加UIViewController</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、与原生UIViewController交互"><span class="nav-number">2.6.</span> <span class="nav-text">6、与原生UIViewController交互</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">3.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CookieJ</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ljunb"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("9CpSzMdbtDYXSepJqQuJV3nW-gzGzoHsz", "qWz5Y1ujhh50muGIwOIdBG41");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
