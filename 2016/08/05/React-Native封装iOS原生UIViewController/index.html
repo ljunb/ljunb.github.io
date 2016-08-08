@@ -85,21 +85,21 @@
 
 
 <meta name="description" content="本Demo是基于公司项目业务需求的。由于项目中要接入IM模块，在自己的一番摸索后，决定采用原生来开发IM模块，这样可以大幅度的利用环信提供的EaseUI，节省开发时间。
-背景项目框架与大部分APP类似，底部由4个tab组成，其中一个tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后">
+背景项目框架与大部分APP类似，底部由4个Tab组成，其中一个Tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native封装iOS原生UIViewController">
 <meta property="og:url" content="http://yoursite.com/2016/08/05/React-Native封装iOS原生UIViewController/index.html">
 <meta property="og:site_name" content="CookieJ's Blog">
 <meta property="og:description" content="本Demo是基于公司项目业务需求的。由于项目中要接入IM模块，在自己的一番摸索后，决定采用原生来开发IM模块，这样可以大幅度的利用环信提供的EaseUI，节省开发时间。
-背景项目框架与大部分APP类似，底部由4个tab组成，其中一个tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后">
+背景项目框架与大部分APP类似，底部由4个Tab组成，其中一个Tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后">
 <meta property="og:image" content="http://i1.piimg.com/1949/90c0b3afe97302c3.png">
 <meta property="og:image" content="http://i4.piimg.com/1949/b110d1d21bf8c2a3.png">
 <meta property="og:image" content="http://i2.piimg.com/1949/4a5de7ae7c07909a.png">
-<meta property="og:updated_time" content="2016-08-06T10:29:33.000Z">
+<meta property="og:updated_time" content="2016-08-08T13:44:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native封装iOS原生UIViewController">
 <meta name="twitter:description" content="本Demo是基于公司项目业务需求的。由于项目中要接入IM模块，在自己的一番摸索后，决定采用原生来开发IM模块，这样可以大幅度的利用环信提供的EaseUI，节省开发时间。
-背景项目框架与大部分APP类似，底部由4个tab组成，其中一个tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后">
+背景项目框架与大部分APP类似，底部由4个Tab组成，其中一个Tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后">
 <meta name="twitter:image" content="http://i1.piimg.com/1949/90c0b3afe97302c3.png">
 
 
@@ -319,14 +319,14 @@
 
       
         <p>本Demo是基于公司项目业务需求的。由于项目中要接入IM模块，在自己的一番摸索后，决定采用原生来开发IM模块，这样可以大幅度的利用环信提供的EaseUI，节省开发时间。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>项目框架与大部分APP类似，底部由4个tab组成，其中一个tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后台同事直接返回。好友列表将保持使用React Native来实现，而消息列表则计划用原生界面开发。本Demo只显示一个消息列表，以做演示。大家可以在这里查看<a href="https://github.com/ljunb/iOSNativeManagerDemo" target="_blank" rel="external">Demo源码</a>。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>项目框架与大部分APP类似，底部由4个Tab组成，其中一个Tab是IM模块，界面顶部是类QQ好友列表顶部的Segment控件，用于控制显示消息列表和好友列表。项目不提供好友管理功能，公司将自己维护一套好友体系，所以好友列表由后台同事直接返回。好友列表将保持使用React Native来实现，而消息列表则计划用原生界面开发。本Demo只显示一个消息列表，以做演示。大家可以在这里查看<a href="https://github.com/ljunb/iOSNativeManagerDemo" target="_blank" rel="external">Demo源码</a>。</p>
 <a id="more"></a>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="1、初始化项目"><a href="#1、初始化项目" class="headerlink" title="1、初始化项目"></a>1、初始化项目</h3><p>关于React Native封装iOS原生UI，这里不做细述，可参考官方文档。其实本次demo对iOS原生UIViewController的封装，与原生UI封装方式相差不多。基本思路是在封装的原生UI中，添加需要显示的UIViewController，由原生UI持有该UIViewController。Demo使用到了react-native-scrollable-tab-view和react-native-vector-icons这两个组件，故在新建React Native项目后，安装组件：</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="1、初始化项目"><a href="#1、初始化项目" class="headerlink" title="1、初始化项目"></a>1、初始化项目</h3><p>关于React Native封装iOS原生UI，这里不做细述，可参考官方文档。其实本Demo对iOS原生UIViewController的封装，与原生UI封装方式相差不多。基本思路是在封装的原生UI中，添加需要显示的UIViewController，由原生UI持有该UIViewController。Demo使用到了react-native-scrollable-tab-view和react-native-vector-icons这两个组件，故在新建React Native项目后，安装组件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ react-native init iOSNativeManagerDemo</div><div class="line">$ cd iOSNativeManagerDemo</div><div class="line">$ npm install react-native-scrollable-tab-view --save</div><div class="line">$ npm install react-native-vector-icons --save</div><div class="line">$ rnpm link</div></pre></td></tr></table></figure>
 <h3 id="2、搭建基本界面"><a href="#2、搭建基本界面" class="headerlink" title="2、搭建基本界面"></a>2、搭建基本界面</h3><p>Demo中自定义了一个CustomTabBar组件，用于展示APP中常见的上图片下文本的TabBar效果。在消息页面，将通过封装iOS原生ViewController的形式，用UITableView展示一个消息列表，基本界面如下：</p>
 <p><img src="http://i1.piimg.com/1949/90c0b3afe97302c3.png" alt="Markdown"></p>
-<p>到此，完成基本界面的搭建，接下来正式开始进行iOS原生UIViewController的封装。</p>
-<h3 id="3、新建RCTViewManager子类"><a href="#3、新建RCTViewManager子类" class="headerlink" title="3、新建RCTViewManager子类"></a>3、新建RCTViewManager子类</h3><p>React Native并不支持对UIViewController的直接封装，但是可以对原生UI进行封装。所以我的思路是先封装一个原生的MessageListView，然后在该视图里面，添加UIViewController的view，达到封装UIViewController的目的。在React Native对iOS原生UI的封装中，需要做到：</p>
+<p>到此，完成基本界面的搭建，接下来开始进行iOS原生UIViewController的封装。</p>
+<h3 id="3、新建RCTViewManager子类"><a href="#3、新建RCTViewManager子类" class="headerlink" title="3、新建RCTViewManager子类"></a>3、新建RCTViewManager子类</h3><p>React Native并不支持对UIViewController的直接封装，但是可以对原生UI进行封装。所以我的思路是先封装一个原生的MessageView，然后在该视图里面，添加UIViewController的view，达到封装UIViewController的目的。在React Native对iOS原生UI的封装中，需要做到：</p>
 <blockquote>
 <ul>
 <li>创建一个RCTViewManager的子类</li>
@@ -334,7 +334,7 @@
 <li>实现-(UIView *)view方法</li>
 </ul>
 </blockquote>
-<p>在该基础上，新建一个MessageView类，该类将用于持有最终要显示的UIViewController的view。在RCTMessageViewManager的-(UIView *)view方法中，返回MessageView实例：</p>
+<p>在新建了RCTMessageViewManager的基础上，新建一个MessageView类，该类将用于持有最终要显示的UIViewController。在RCTMessageViewManager的-(UIView *)view方法中，返回MessageView实例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// RCTMessageViewManager.h</div><div class="line">#import &quot;RCTMessageViewManager.h&quot;</div><div class="line">#import &quot;MessageView.h&quot;</div><div class="line"></div><div class="line">@implementation RCTMessageViewManager</div><div class="line">  </div><div class="line">RCT_EXPORT_MODULE()</div><div class="line">  </div><div class="line">- (UIView *)view &#123;</div><div class="line">    return [MessageView new];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
 <h3 id="4、在JavaScript中导出并使用MessageView"><a href="#4、在JavaScript中导出并使用MessageView" class="headerlink" title="4、在JavaScript中导出并使用MessageView"></a>4、在JavaScript中导出并使用MessageView</h3><p>在完成原生UI的封装后，还需要将该视图导出给JavaScript使用。为了在项目的一些界面使用该视图，可以将该视图处理成一个React组件：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// MessageView.js</span></div><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> &#123; requireNativeComponent &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> RCTMessageView = requireNativeComponent(<span class="string">'RCTMessageView'</span>, MessageView);</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageView</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span> &lt;RCTMessageView &#123;...this.props&#125;/&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
