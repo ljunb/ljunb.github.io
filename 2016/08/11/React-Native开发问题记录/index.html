@@ -84,22 +84,22 @@
 
 
 
-<meta name="description" content="Android1、release版加载GIF资源时闪退同事在安装debug版本时，GIF可以正常加载，项目运行也正常。但是在换成release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。
+<meta name="description" content="AndroidRelease版加载GIF资源时闪退同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。
 找到项目的android/app/proguard-rules.pro文件，添加以下代码：
-123# gif crash-keep class com.facebook.">
+123# gif crash-keep class com.facebook.im">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native开发问题记录">
 <meta property="og:url" content="http://yoursite.com/2016/08/11/React-Native开发问题记录/index.html">
 <meta property="og:site_name" content="CookieJ's Blog">
-<meta property="og:description" content="Android1、release版加载GIF资源时闪退同事在安装debug版本时，GIF可以正常加载，项目运行也正常。但是在换成release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。
+<meta property="og:description" content="AndroidRelease版加载GIF资源时闪退同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。
 找到项目的android/app/proguard-rules.pro文件，添加以下代码：
-123# gif crash-keep class com.facebook.">
-<meta property="og:updated_time" content="2016-08-11T04:49:17.000Z">
+123# gif crash-keep class com.facebook.im">
+<meta property="og:updated_time" content="2016-08-16T14:09:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native开发问题记录">
-<meta name="twitter:description" content="Android1、release版加载GIF资源时闪退同事在安装debug版本时，GIF可以正常加载，项目运行也正常。但是在换成release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。
+<meta name="twitter:description" content="AndroidRelease版加载GIF资源时闪退同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。
 找到项目的android/app/proguard-rules.pro文件，添加以下代码：
-123# gif crash-keep class com.facebook.">
+123# gif crash-keep class com.facebook.im">
 
 
 
@@ -317,9 +317,12 @@
       
 
       
-        <h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><h3 id="1、release版加载GIF资源时闪退"><a href="#1、release版加载GIF资源时闪退" class="headerlink" title="1、release版加载GIF资源时闪退"></a>1、release版加载GIF资源时闪退</h3><p>同事在安装debug版本时，GIF可以正常加载，项目运行也正常。但是在换成release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。</p>
+        <h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><h3 id="Release版加载GIF资源时闪退"><a href="#Release版加载GIF资源时闪退" class="headerlink" title="Release版加载GIF资源时闪退"></a>Release版加载GIF资源时闪退</h3><p>同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了<a href="https://github.com/facebook/fresco/issues/209" target="_blank" rel="external">解决方法</a>。</p>
 <p>找到项目的android/app/proguard-rules.pro文件，添加以下代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># gif crash</div><div class="line">-keep class com.facebook.imagepipeline.gif.** &#123; *; &#125;</div><div class="line">-keep class com.facebook.imagepipeline.webp.** &#123; *; &#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="iOS"><a href="#iOS" class="headerlink" title="iOS"></a>iOS</h2><h3 id="iOS原生访问React-Native时，bridge为nil"><a href="#iOS原生访问React-Native时，bridge为nil" class="headerlink" title="iOS原生访问React Native时，bridge为nil"></a>iOS原生访问React Native时，bridge为nil</h3><p>由于项目的会话列表采用原生开发，界面的导航栏分为“消息”和“联系人”两个tab，业务需求是消息右上角需显示未读消息数。导航栏采用React Native实现，所以需要在原生发送数据到JavaScript。一开始是在ConversationListController里面做编码工作，但是调试的时候发现self.bridge一直是nil，如此一来在JavaScript这边当然无法监听到原生所触发的事件了。借助Google，在中文网找到相关帖子，解决方法是需要采用单例模式来实现桥接的Module：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">+ (instancetype)sharedChatBridge &#123;</div><div class="line">    static AMChatManagerBridgeApi * sharedBridge = nil;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        sharedBridge = [[AMChatManagerBridgeApi alloc] init];</div><div class="line">    &#125;);</div><div class="line">    return sharedBridge;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (id)allocWithZone:(NSZone *)zone &#123;</div><div class="line">    static AMChatManagerBridgeApi *sharedBridge = nil;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        sharedBridge = [super allocWithZone:zone];</div><div class="line">    &#125;);</div><div class="line">    return sharedBridge;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -504,7 +507,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android"><span class="nav-number">1.</span> <span class="nav-text">Android</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、release版加载GIF资源时闪退"><span class="nav-number">1.1.</span> <span class="nav-text">1、release版加载GIF资源时闪退</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android"><span class="nav-number">1.</span> <span class="nav-text">Android</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Release版加载GIF资源时闪退"><span class="nav-number">1.1.</span> <span class="nav-text">Release版加载GIF资源时闪退</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS"><span class="nav-number">2.</span> <span class="nav-text">iOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS原生访问React-Native时，bridge为nil"><span class="nav-number">2.1.</span> <span class="nav-text">iOS原生访问React Native时，bridge为nil</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
