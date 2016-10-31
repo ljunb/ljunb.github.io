@@ -1,0 +1,806 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="React Native," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="本文主要讲述基于React Native实现的APP新特性引导页功能，Demo中需要借助react-native-splash-screen组件，在适当时机使用组件提供的hide方法，从而确保在路由设置正确后隐藏splash图片，达到比较正常的交互体验。相应的Demo地址，具体内容将在近期更新。
+
+概述相对于前版本，这周即将上线的艾美管家，开放了之前已经开发完毕的大部分新功能，按产品要求，需要加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native实现新特性引导页">
+<meta property="og:url" content="http://yoursite.com/2016/10/31/React-Native实现新特性引导页/index.html">
+<meta property="og:site_name" content="CookieJ's Blog">
+<meta property="og:description" content="本文主要讲述基于React Native实现的APP新特性引导页功能，Demo中需要借助react-native-splash-screen组件，在适当时机使用组件提供的hide方法，从而确保在路由设置正确后隐藏splash图片，达到比较正常的交互体验。相应的Demo地址，具体内容将在近期更新。
+
+概述相对于前版本，这周即将上线的艾美管家，开放了之前已经开发完毕的大部分新功能，按产品要求，需要加">
+<meta property="og:image" content="http://p1.bpimg.com/1949/3b96f5ef85ba8fdb.jpg">
+<meta property="og:updated_time" content="2016-10-31T15:44:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native实现新特性引导页">
+<meta name="twitter:description" content="本文主要讲述基于React Native实现的APP新特性引导页功能，Demo中需要借助react-native-splash-screen组件，在适当时机使用组件提供的hide方法，从而确保在路由设置正确后隐藏splash图片，达到比较正常的交互体验。相应的Demo地址，具体内容将在近期更新。
+
+概述相对于前版本，这周即将上线的艾美管家，开放了之前已经开发完毕的大部分新功能，按产品要求，需要加">
+<meta name="twitter:image" content="http://p1.bpimg.com/1949/3b96f5ef85ba8fdb.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/10/31/React-Native实现新特性引导页/"/>
+
+  <title> React Native实现新特性引导页 | CookieJ's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">CookieJ's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">React Native | iOS</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                React Native实现新特性引导页
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-31T23:14:10+08:00" content="2016-10-31">
+              2016-10-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/31/React-Native实现新特性引导页/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/31/React-Native实现新特性引导页/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/31/React-Native实现新特性引导页/" class="leancloud_visitors" data-flag-title="React Native实现新特性引导页">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文主要讲述基于React Native实现的APP新特性引导页功能，Demo中需要借助react-native-splash-screen组件，在适当时机使用组件提供的hide方法，从而确保在路由设置正确后隐藏splash图片，达到比较正常的交互体验。相应的<a href="https://github.com/ljunb/RNNewFeatureDemo" target="_blank" rel="external">Demo地址</a>，具体内容将在近期更新。</p>
+</blockquote>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>相对于前版本，这周即将上线的艾美管家，开放了之前已经开发完毕的大部分新功能，按产品要求，需要加入新特性引导页功能。之前做iOS原生开发的时候，这并不是什么难事，很快可以实现出来。其实上周五接到这个需求，自己心里并没觉得有多大压力，想着根据以前的思路来走应该没问题，所以也没当一回事。后来周日抽空尝试了下，发现事与愿违，一直绕在里面没有出来。今晚继续尝试了一下，最终解决了问题，不过自我感觉并不能算完美，还期待同行提出更好的建议。</p>
+<a id="more"></a>
+<p>这里简单列下当前APP项目结构：</p>
+<p><img src="http://p1.bpimg.com/1949/3b96f5ef85ba8fdb.jpg" alt="Markdown"></p>
+<blockquote>
+<ul>
+<li>root.js作为顶层组件，在index.ios.js和index.android.js导入使用</li>
+<li>app.js中用Navigator来渲染APP初始页面</li>
+<li>login.js是APP的登录页面</li>
+</ul>
+</blockquote>
+<p>参照上图，假如APP更新后第一次打开，那么就应该在app.js中渲染新特性页面，否则没有Navigator包裹的话，将无法调用Navigator的resetTo重置到登录页面。在iOS原生开发中，一般是根据本地是否已缓存APP版本号，如果没有缓存，则进入新特性页面，并缓存当前版本号；如本地已有缓存版本号，则直接进入主页面（这里可理解为登录页面）。沿着这个套路，版本号的缓存是必要的，但是后来发现自己忽略了一点：当前项目中封装的是RN提供的AsyncStorage，读取缓存是异步操作，这跟iOS的NSUserDefaults可是两码事。如何在异步操作中保证当前渲染的是正确的页面，是解决问题的关键。</p>
+<h2 id="失败尝试"><a href="#失败尝试" class="headerlink" title="失败尝试"></a>失败尝试</h2><p>第一次尝试现在看来有点迷，当时是在AiMeiManager的componentWillMount方法中，读取缓存是否存在版本号，并在回调中来setState。首先，AsyncStorage的load已是异步执行，无法保证在componentWillMount执行后，第一次render之前就读取缓存完毕；其次，setState也是异步操作，何时渲染什么页面变得更加不可控。后来想想，通过setState的方式，来改变Navigator渲染的初始页面，这姿势本来就是错的吧？</p>
+<p>当时代码大概类似于：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">constructor</span>(props) &#123;</div><div class="line">  <span class="keyword">super</span>(props);</div><div class="line">  <span class="keyword">this</span>.state = &#123;</div><div class="line">    defaultComponent: Login</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">componentWillMount() &#123;</div><div class="line">  GlobalStorage.load(<span class="string">'BuildVersion'</span>)</div><div class="line">    .then(version =&gt; &#123;</div><div class="line">      <span class="comment">// 当前未缓存版本号，说明未打开过APP</span></div><div class="line">      <span class="keyword">if</span> (_currentUser.BuildVersion != version) &#123;</div><div class="line">        <span class="comment">// 缓存版本号</span></div><div class="line">        GlobalStorage.save(<span class="string">'BuildVersion'</span>, _currentUser.BuildVersion);</div><div class="line">          <span class="keyword">this</span>.setState(&#123;defaultComponent: Login&#125;, ()=&gt;SplashScreen.hide());</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        SplashScreen.hide();</div><div class="line">      &#125;</div><div class="line">  &#125;)</div><div class="line">&#125;</div><div class="line">render() &#123;</div><div class="line">  <span class="keyword">let</span> defaultComponent = <span class="keyword">this</span>.state.defaultComponent;</div><div class="line">  <span class="keyword">return</span> (</div><div class="line">    &lt;View style=&#123;&#123; flex: 1 &#125;&#125;&gt;</div><div class="line">      &lt;Navigator</div><div class="line">        initialRoute=&#123;&#123; component: defaultComponent &#125;&#125;</div><div class="line">        configureScene=&#123;() =&gt; &#123;return Navigator.SceneConfigs.PushFromRight&#125;&#125;</div><div class="line">        renderScene=&#123;(route, navigator) =&gt; &#123;</div><div class="line">          let Component = route.component;</div><div class="line">          return &lt;Component navigator=&#123;navigator&#125; &#123;...route.params&#125;/&gt;</div><div class="line">        &#125;&#125;</div><div class="line">      /&gt;</div><div class="line">    &lt;/View&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>SplashScreen是GitHub上用于解决启动白屏的组件，我试着在APP加载完“正确”组件后，关闭splash图片，很遗憾，这个方法并不起效。</p>
+</blockquote>
+<h2 id="新的思路"><a href="#新的思路" class="headerlink" title="新的思路"></a>新的思路</h2><p>今晚的尝试源于resetTo方法，也是一时想到的。按理说缓存读取完毕后，采用Navigator的resetTo方法才是正确的姿势，有了这个思路，就开始了一次新的尝试。</p>
+<p>其实也很简单，梳理一下即是：在AiMeiManager组件中，依然将Login组件作为默认渲染的页面，选择在Login的componentWillMount方法中来读取缓存。缓存读取完毕后，如果判断是第一次打开APP，则直接resetTo新特性页面，并在新特性页面的componentDidMount方法中，调用SplashScreen的hide方法隐藏splash图片；否则隐藏splash图片，也就直接显示当前的Login页面。</p>
+<p>代码处理相当简单，这里省去root.js代码，因为是直接将Login作为初始页面渲染出来，没有做额外处理。而Login的部分代码将会是如下这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// login.js   </span></div><div class="line">componentWillMount() &#123;</div><div class="line">  <span class="comment">// 非新特性页面导航过来</span></div><div class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.props.isResetFromNewFeature) &#123;</div><div class="line">    GlobalStorage.load(<span class="string">'BuildVersion'</span>)</div><div class="line">      .then(version =&gt; &#123;</div><div class="line">        <span class="comment">// 当前未缓存版本号，说明未打开过APP</span></div><div class="line">        <span class="keyword">if</span> (_currentUser.BuildVersion != version) &#123;</div><div class="line">          <span class="comment">// 缓存版本号</span></div><div class="line">          GlobalStorage.save(<span class="string">'BuildVersion'</span>, _currentUser.BuildVersion);</div><div class="line">            <span class="keyword">this</span>.props.navigator.resetTo(&#123;</div><div class="line">              name: <span class="string">'AiMeiNewFeatureView'</span>,</div><div class="line">              component: AiMeiNewFeatureView,</div><div class="line">            &#125;);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">          SplashScreen.hide();</div><div class="line">        &#125;</div><div class="line">      &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>相应的AiMeiNewFeatureView组件代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// AiMeiNewFeatureView.js</span></div><div class="line">componentDidMount() &#123;</div><div class="line">  SplashScreen.hide();</div><div class="line">&#125;</div><div class="line">_renderPage(data, pageID) &#123;</div><div class="line">  <span class="keyword">return</span> (</div><div class="line">    &lt;TouchableOpacity</div><div class="line">      style=&#123;&#123;flex:1&#125;&#125;</div><div class="line">      onPress=&#123;()=&gt;&#123;</div><div class="line">        this.props.navigator.resetTo(&#123;</div><div class="line">          name: 'Register',</div><div class="line">          component: Register,</div><div class="line">          params: &#123;</div><div class="line">            isResetFromNewFeature: true</div><div class="line">          &#125;</div><div class="line">        &#125;);</div><div class="line">      &#125;&#125;</div><div class="line">    &gt;</div><div class="line">      &lt;Text&gt;&#123;data+'-'+pageID&#125;&lt;/Text&gt;</div><div class="line">    &lt;/TouchableOpacity&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>Login组件中对this.props.isResetFromNewFeature的判断，主要是因为从新特性页面重置到登录页面后，没必要再进行对本地版本号的一个判断了</li>
+<li>读取缓存后，如有版本号的缓存，则直接隐藏splash图片，显示当前的登录页面；否则resetTo到新特性页面，并在新特性组件加载完毕后调用SplashScreen的hide方法</li>
+<li>在点击新特性图片后，重置到登录页面，传入isResetFromNewFeature标识位</li>
+</ul>
+</blockquote>
+<p>通过上面的处理后，现在已经能够按照正常的业务逻辑展示页面。不过公司代码运行起来后，发现有个问题，就是Android的Debug模式下，APP第一次启动重置到新特性页面的时候，会有黄色警告：</p>
+<p><code>Warning: setState(...): Can only update a mounted or mounting component. This usually means you called setState() on an unmounted component. This is a no-op. Please check the code for the undefined component.</code></p>
+<p>根据公司项目的代码分析来看，这大概是由于Login组件在componentDidMount方法中，执行了其他异步操作，并在异步操作之后进行了setState，而在该异步操作读取成功之前，当前路由已重置到了新特性页面，此时异步回调成功后进行setState时，Login组件已经销毁了，所以报了该警告。当然这是针对公司的代码，其他情况另做讨论。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>方法并非最好，自己试了暂时能实现需求，也分享出来给各位同行参考，如有更好方法，当然是欢迎留言评论的~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React-Native/" rel="tag">#React Native</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/05/基于React-Native实现QQ好友列表/" rel="next" title="基于React Native实现QQ好友列表">
+                <i class="fa fa-chevron-left"></i> 基于React Native实现QQ好友列表
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/31/React-Native实现新特性引导页/"
+           data-title="React Native实现新特性引导页" data-url="http://yoursite.com/2016/10/31/React-Native实现新特性引导页/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i4.piimg.com/4851/154255b8582b8795.png"
+               alt="CookieJ" />
+          <p class="site-author-name" itemprop="name">CookieJ</p>
+          <p class="site-description motion-element" itemprop="description">Be stronger.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ljunb" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/rn-cookiej" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:l_junb@163.com" target="_blank" title="E-mail">
+                  
+                    <i class="fa fa-fw fa-envelope-square"></i>
+                  
+                  E-mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#失败尝试"><span class="nav-number">2.</span> <span class="nav-text">失败尝试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新的思路"><span class="nav-number">3.</span> <span class="nav-text">新的思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CookieJ</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ljunb"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("9CpSzMdbtDYXSepJqQuJV3nW-gzGzoHsz", "qWz5Y1ujhh50muGIwOIdBG41");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
