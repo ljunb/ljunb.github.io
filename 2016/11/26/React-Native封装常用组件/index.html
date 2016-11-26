@@ -1,0 +1,817 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="React Native,轮子," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="最近APP需求改动相当频繁，不少界面基本是要推翻重写。除了产品的“无理”要求之外，代码的可扩展性差、耦合性强也是罪魁祸首之一。这几天重构了大部分界面代码，也封装了一些组件出来，本文就针对其中一个来分享下自己封装的简单思路。相信实践过React Native的朋友，或多或少都自己封装过组件了，这里提到的东西也基本是针对新人，也算是自己的一个总结记录吧。
+
+需求APP具有查看公司机器（咪哒MINIK">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native封装常用组件">
+<meta property="og:url" content="http://yoursite.com/2016/11/26/React-Native封装常用组件/index.html">
+<meta property="og:site_name" content="CookieJ's Blog">
+<meta property="og:description" content="最近APP需求改动相当频繁，不少界面基本是要推翻重写。除了产品的“无理”要求之外，代码的可扩展性差、耦合性强也是罪魁祸首之一。这几天重构了大部分界面代码，也封装了一些组件出来，本文就针对其中一个来分享下自己封装的简单思路。相信实践过React Native的朋友，或多或少都自己封装过组件了，这里提到的东西也基本是针对新人，也算是自己的一个总结记录吧。
+
+需求APP具有查看公司机器（咪哒MINIK">
+<meta property="og:image" content="https://github.com/ljunb/RNComponentDemo/raw/master/screenshot/photo.gif">
+<meta property="og:image" content="https://github.com/ljunb/RNComponentDemo/raw/master/screenshot/demo.gif">
+<meta property="og:updated_time" content="2016-11-26T04:02:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native封装常用组件">
+<meta name="twitter:description" content="最近APP需求改动相当频繁，不少界面基本是要推翻重写。除了产品的“无理”要求之外，代码的可扩展性差、耦合性强也是罪魁祸首之一。这几天重构了大部分界面代码，也封装了一些组件出来，本文就针对其中一个来分享下自己封装的简单思路。相信实践过React Native的朋友，或多或少都自己封装过组件了，这里提到的东西也基本是针对新人，也算是自己的一个总结记录吧。
+
+需求APP具有查看公司机器（咪哒MINIK">
+<meta name="twitter:image" content="https://github.com/ljunb/RNComponentDemo/raw/master/screenshot/photo.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/26/React-Native封装常用组件/"/>
+
+  <title> React Native封装常用组件 | CookieJ's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">CookieJ's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">React Native | iOS</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                React Native封装常用组件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-26T08:15:27+08:00" content="2016-11-26">
+              2016-11-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/React-Native/" itemprop="url" rel="index">
+                    <span itemprop="name">React Native</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/26/React-Native封装常用组件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/26/React-Native封装常用组件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/26/React-Native封装常用组件/" class="leancloud_visitors" data-flag-title="React Native封装常用组件">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>最近APP需求改动相当频繁，不少界面基本是要推翻重写。除了产品的“无理”要求之外，代码的可扩展性差、耦合性强也是罪魁祸首之一。这几天重构了大部分界面代码，也封装了一些组件出来，本文就针对其中一个来分享下自己封装的简单思路。相信实践过React Native的朋友，或多或少都自己封装过组件了，这里提到的东西也基本是针对新人，也算是自己的一个总结记录吧。</p>
+</blockquote>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>APP具有查看公司机器（咪哒MINIK）信息的界面，提供了编辑机器名称的功能，经过几次改版，最终确定用浮层形式来提供编辑功能。UI和效果基本与iPhone系统新建相簿类似：</p>
+<a id="more"></a>
+<p><img src="https://github.com/ljunb/RNComponentDemo/raw/master/screenshot/photo.gif" alt="相簿"></p>
+<p>简单的分析下这个效果：</p>
+<blockquote>
+<ul>
+<li>编辑区后面是一个半透明的背景</li>
+<li>编辑区有一个从放大1.x的比例，再回到1比例的效果</li>
+</ul>
+</blockquote>
+<p>交互妹子一开始以这个为例，后来找了另外一个实例给我参考，也算基本敲定了最后效果，这将在后面可以看到，不过基本跟上面的类似，出入不大。按上面的分析，这个UI跟效果其实很简单，只要结合一点布局和动画基础，那么基本上就可以搞出来。接下来，就让我们一步一步来实现吧。</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h3 id="组件的布局"><a href="#组件的布局" class="headerlink" title="组件的布局"></a>组件的布局</h3><p>首先要做这样一个组件，那么可以先考虑第一个问题：如何让组件显示的时候，是覆盖整个屏幕，并且是在最顶层？</p>
+<p>我刚接触React Native的时候，Flex布局里面还没有zIndex的概念，后来是增加了，不过我还没有去细看这个属性，所以这里暂时不考虑这个相关的实现方式。查看文档可以知道官方提供了Modal，这个组件就是可以直接覆盖根视图的，并且提供了animationType属性可供设置，如此看来这将会是最好的选择。其实之前的浮层组件，我基本也是用Modal来实现，有兴趣的朋友可以用Modal来封装今天的组件。</p>
+<p>本文就不采用这种方式了，改用最基本的View来做。View的布局提供了absolute和releative两种方式，这里采用前者，并且将top、left、bottom和right四个值都设为0，再把该组件放置父组件最后，那么一显示将会覆盖掉父组件（一般是整个屏幕）。</p>
+<h3 id="内部状态及与外界交互"><a href="#内部状态及与外界交互" class="headerlink" title="内部状态及与外界交互"></a>内部状态及与外界交互</h3><p>组件有显示或隐藏两个状态，也涉及到动画效果，当然还有编辑内容，这些都是要在组件内部自己处理。唯一与外界有关联的，那么就是确定编辑内容后的事件。至于取消事件，只是提供给内部，用来控制是否显示就可以了，与外界无关。本组件触摸背景和取消按钮事件，都将能隐藏组件。这样一来，我们就基本可以定出组件内部需要用的几个state属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">constructor</span>(props) &#123;</div><div class="line">    <span class="keyword">super</span>(props);</div><div class="line">    <span class="keyword">this</span>.state = &#123;</div><div class="line">        isShow: <span class="literal">false</span>,</div><div class="line">      	opacityAnimationValue: <span class="keyword">new</span> Animated.Value(<span class="number">0</span>),</div><div class="line">      	scaleAnimationValue: <span class="keyword">new</span> Animated.Value(<span class="number">0</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至于外部通过什么方法名进行回调，这个取决每个人，比如我这里用了ensureCallback，将在点击确定按钮时进行调用。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="显示组件"><a href="#显示组件" class="headerlink" title="显示组件"></a>显示组件</h3><p>在一开始的时候，我们可以先不实现动画，只要做到显示出该组件就可以了。参考一些第三方组件，我们可以为该组件提供一个show方法，用来显示出组件，相应的在内部再提炼出一个组件自己的_close方法。那么自定义组件EditView部分代码将会是这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// EditView.js</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">EditView</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(props) &#123;</div><div class="line">        <span class="keyword">super</span>(props);</div><div class="line">        <span class="keyword">this</span>.show = <span class="keyword">this</span>.show.bind(<span class="keyword">this</span>);</div><div class="line">        <span class="keyword">this</span>._close = <span class="keyword">this</span>._close.bind(<span class="keyword">this</span>);</div><div class="line">        <span class="keyword">this</span>.state = &#123;</div><div class="line">            isShow: <span class="literal">false</span>,</div><div class="line">            inputText: <span class="string">''</span>,</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    show() &#123;</div><div class="line">        <span class="keyword">this</span>.setState(&#123;</div><div class="line">            isShow: <span class="literal">true</span>,</div><div class="line">            inputText: <span class="keyword">this</span>.props.inputText</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    _close() &#123;</div><div class="line">        <span class="keyword">this</span>.setState(&#123;isShow: <span class="literal">false</span>&#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.state.isShow) <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> (</div><div class="line">            &lt;View style=&#123;styles.container /&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">    container: &#123;</div><div class="line">        position: 'absolute',</div><div class="line">        top: 0,</div><div class="line">        left: 0,</div><div class="line">        bottom: 0,</div><div class="line">        right: 0,</div><div class="line">        backgroundColor: 'rgba(1, 1, 1, 0.5)'</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>将组件显示出来的方法是如此简单，接下来还需在父组件中导入使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="keyword">import</span> EditView <span class="keyword">from</span> <span class="string">'./EditView'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>(props) &#123;</div><div class="line">        <span class="keyword">super</span>(props);</div><div class="line">        <span class="keyword">this</span>.state = &#123;</div><div class="line">            name: <span class="string">'小明'</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span> (</div><div class="line">            &lt;View style=&#123;styles.container&#125;&gt;</div><div class="line">               	&lt;View style=&#123;styles.nameContainer&#125;&gt;</div><div class="line">                    &lt;Text style=&#123;&#123;marginRight: 10&#125;&#125;&gt;&#123;this.state.name&#125;&lt;/Text&gt;</div><div class="line">                    &lt;TouchableOpacity</div><div class="line">                        activeOpacity=&#123;0.8&#125;</div><div class="line">                        onPress=&#123;()=&gt;this.editView.show()&#125;</div><div class="line">                    &gt;</div><div class="line">                        &lt;Text&gt;编辑名称&lt;/Text&gt;</div><div class="line">                    &lt;/TouchableOpacity&gt;</div><div class="line">                &lt;/View&gt;</div><div class="line">                &lt;EditView</div><div class="line">                    ref=&#123;editView =&gt; this.editView = editView&#125;</div><div class="line">                    inputText=&#123;this.state.name&#125;</div><div class="line">                /&gt;</div><div class="line">            &lt;/View&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>因为采用了绝对布局，组件需要放置到顶层View的最下面，这样就能确保显示的时候，是覆盖到了整个屏幕。采用ref引用，来调用组件的show方法，将组件显示出来。</li>
+<li>需要编辑的内容，以props形式传入组件，并在show方法中进行setState操作，显示到组件的输入框中。</li>
+</ul>
+</blockquote>
+<h3 id="添加动画"><a href="#添加动画" class="headerlink" title="添加动画"></a>添加动画</h3><p>我们一开始就将组件添加到了父组件中，所以在还没显示的时候，其实子组件已经执行了componentDidMount方法，正常且好理解的是，应该将动画和传递进来的文本，在show方法中设置。动画涉及一个透明度和编辑框的缩放，这里透明度用timing来控制opacity，缩放则用spring来控制scale，具体的动画基础知识，可以参考官方文档，这里不做展开。需要注意的是，透明度动画和缩放动画是同时执行，所以需要parallel来组合动画。</p>
+<p>部分代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">show() &#123;</div><div class="line">    <span class="keyword">this</span>.setState(&#123;</div><div class="line">        isShow: <span class="literal">true</span>,</div><div class="line">        inputText: <span class="keyword">this</span>.props.inputText</div><div class="line">    &#125;, () =&gt; &#123;</div><div class="line">        Animated.parallel([</div><div class="line">            Animated.timing(<span class="keyword">this</span>.state.opacityAnimationValue, &#123;</div><div class="line">                toValue: <span class="number">1</span>,</div><div class="line">                duration: <span class="number">300</span></div><div class="line">            &#125;),</div><div class="line">            Animated.spring(<span class="keyword">this</span>.state.scaleAnimationValue, &#123;</div><div class="line">                toValue: <span class="number">1</span>,</div><div class="line">                duration: <span class="number">300</span>,</div><div class="line">                friction: <span class="number">5</span></div><div class="line">            &#125;)</div><div class="line">        ]).start();</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">_close() &#123;</div><div class="line">    <span class="keyword">this</span>.setState(&#123;isShow: <span class="literal">false</span>&#125;);</div><div class="line">    <span class="keyword">this</span>.state.opacityAnimationValue.setValue(<span class="number">0</span>);</div><div class="line">    <span class="keyword">this</span>.state.scaleAnimationValue.setValue(<span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">render() &#123;</div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.state.isShow) <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">const</span> &#123;ensureCallback&#125; = <span class="keyword">this</span>.props;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> (</div><div class="line">        &lt;Animated.View style=&#123;[styles.container, &#123;opacity: this.state.opacityAnimationValue&#125;]&#125;&gt;</div><div class="line">            &lt;TouchableOpacity</div><div class="line">                activeOpacity=&#123;1&#125;</div><div class="line">                style=&#123;&#123;flex: 1, alignItems: 'center', paddingTop: 100&#125;&#125;</div><div class="line">                onPress=&#123;this._close&#125;</div><div class="line">            &gt;</div><div class="line">                &lt;Animated.View</div><div class="line">                    style=&#123;[styles.contentContainer, &#123;transform: [&#123;scale: this.state.scaleAnimationValue&#125;]&#125;]&#125;</div><div class="line">                &gt;</div><div class="line">                    ...</div><div class="line">                    &lt;View style=&#123;styles.buttonContainer&#125;&gt;</div><div class="line">                        &lt;TouchableOpacity</div><div class="line">                            activeOpacity=&#123;0.75&#125;</div><div class="line">                            style=&#123;[styles.center, &#123;flex: 4.5&#125;]&#125;</div><div class="line">                        &gt;</div><div class="line">                            &lt;Text style=&#123;&#123;fontSize: 16, color: 'black'&#125;&#125;&gt;取消&lt;/Text&gt;</div><div class="line">                        &lt;/TouchableOpacity&gt;</div><div class="line">                        &lt;View style=&#123;[styles.line]&#125;/&gt;</div><div class="line">                        &lt;TouchableOpacity</div><div class="line">                            activeOpacity=&#123;0.75&#125;</div><div class="line">                            style=&#123;[styles.center, &#123;flex: 4.5&#125;]&#125;</div><div class="line">                        &gt;</div><div class="line">                            &lt;Text style=&#123;&#123;fontSize: 16, color: 'black'&#125;&#125;&gt;确定&lt;/Text&gt;</div><div class="line">                        &lt;/TouchableOpacity&gt;</div><div class="line">                    &lt;/View&gt;</div><div class="line">                &lt;/Animated.View&gt;</div><div class="line">            &lt;/TouchableOpacity&gt;</div><div class="line">        &lt;/Animated.View&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>动画开始时机是确保组件显示之后，所以放在了setState的回调方法中。</li>
+<li>在隐藏组件的时候，将所有的动画值都设置为0，以便下次显示组件时，不影响初始动画效果。</li>
+</ul>
+</blockquote>
+<h3 id="与外界交互"><a href="#与外界交互" class="headerlink" title="与外界交互"></a>与外界交互</h3><p>上面用到的显示与隐藏方法，算是交互的一部分，不过最主要的是将修改完的内容回传到父组件去。这里需要用到回调，可以在确定按钮中调用回调方法，并同时隐藏组件：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">render() &#123;</div><div class="line">    const &#123; ensureCallback &#125; = this.props;</div><div class="line">  </div><div class="line">    return (</div><div class="line">        ...</div><div class="line">        &lt;TouchableOpacity</div><div class="line">            activeOpacity=&#123;0.75&#125;</div><div class="line">            style=&#123;[styles.center, &#123;flex: 4.5&#125;]&#125;</div><div class="line">            onPress=&#123;() =&gt; &#123;</div><div class="line">                this._close();</div><div class="line">                ensureCallback(this.state.inputText);</div><div class="line">            &#125;&#125;</div><div class="line">        &gt;</div><div class="line">            &lt;Text style=&#123;&#123;fontSize: 16, color: 'black'&#125;&#125;&gt;确定&lt;/Text&gt;</div><div class="line">        &lt;/TouchableOpacity&gt;</div><div class="line">    )</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>取消的事件与后面背景触摸一致，都是将组件隐藏，直接调用内部的<code>_close</code>方法即可。</p>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>效果基于iOS的Release模式演示：</p>
+<p><img src="https://github.com/ljunb/RNComponentDemo/raw/master/screenshot/demo.gif" alt="演示"></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>完整的<a href="https://github.com/ljunb/RNComponentDemo" target="_blank" rel="external">Demo地址</a>，下载了运行可能效果更好，网页看不出体验。本次封装的组件相对简单，这里只是大概分享一个思路跟流程，相信读者可以不断尝试，封装出更健壮、更好用的组件——不过，希望最后不要死在需求上……</p>
+<p>PS：有兴趣的朋友可以试试公司产品：咪哒MINIK。这个算是迷你K房，体验不错😁！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React-Native/" rel="tag">#React Native</a>
+          
+            <a href="/tags/轮子/" rel="tag">#轮子</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/31/React-Native实现新特性引导页/" rel="next" title="React Native实现新特性引导页">
+                <i class="fa fa-chevron-left"></i> React Native实现新特性引导页
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/26/React-Native封装常用组件/"
+           data-title="React Native封装常用组件" data-url="http://yoursite.com/2016/11/26/React-Native封装常用组件/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://i4.piimg.com/4851/154255b8582b8795.png"
+               alt="CookieJ" />
+          <p class="site-author-name" itemprop="name">CookieJ</p>
+          <p class="site-description motion-element" itemprop="description">Be stronger.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ljunb" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/rn-cookiej" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:l_junb@163.com" target="_blank" title="E-mail">
+                  
+                    <i class="fa fa-fw fa-envelope-square"></i>
+                  
+                  E-mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组件的布局"><span class="nav-number">2.1.</span> <span class="nav-text">组件的布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部状态及与外界交互"><span class="nav-number">2.2.</span> <span class="nav-text">内部状态及与外界交互</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#显示组件"><span class="nav-number">3.1.</span> <span class="nav-text">显示组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加动画"><span class="nav-number">3.2.</span> <span class="nav-text">添加动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与外界交互"><span class="nav-number">3.3.</span> <span class="nav-text">与外界交互</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效果"><span class="nav-number">3.4.</span> <span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">4.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CookieJ</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ljunb"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("9CpSzMdbtDYXSepJqQuJV3nW-gzGzoHsz", "qWz5Y1ujhh50muGIwOIdBG41");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
