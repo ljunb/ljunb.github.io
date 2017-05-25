@@ -84,22 +84,17 @@
 
 
 
-<meta name="description" content="AndroidRelease版加载GIF资源时闪退（React Native 0.25）同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。
-找到项目的android/app/proguard-rules.pro文件，添加以下代码：
-123# gif crash-keep cl">
+<meta name="description" content="AndroidRelease版加载GIF资源时闪退（React Native 0.25）同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。 找到项目的android/app/proguard-rules.pro文件，添加以下代码： 123# gif crash-keep cl">
+<meta name="keywords" content="React Native">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native开发问题记录">
 <meta property="og:url" content="http://yoursite.com/2016/08/11/React-Native开发问题记录/index.html">
-<meta property="og:site_name" content="CookieJ's Blog">
-<meta property="og:description" content="AndroidRelease版加载GIF资源时闪退（React Native 0.25）同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。
-找到项目的android/app/proguard-rules.pro文件，添加以下代码：
-123# gif crash-keep cl">
+<meta property="og:site_name" content="CookieJ&#39;s Blog">
+<meta property="og:description" content="AndroidRelease版加载GIF资源时闪退（React Native 0.25）同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。 找到项目的android/app/proguard-rules.pro文件，添加以下代码： 123# gif crash-keep cl">
 <meta property="og:updated_time" content="2016-10-31T15:18:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native开发问题记录">
-<meta name="twitter:description" content="AndroidRelease版加载GIF资源时闪退（React Native 0.25）同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。
-找到项目的android/app/proguard-rules.pro文件，添加以下代码：
-123# gif crash-keep cl">
+<meta name="twitter:description" content="AndroidRelease版加载GIF资源时闪退（React Native 0.25）同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了解决方法。 找到项目的android/app/proguard-rules.pro文件，添加以下代码： 123# gif crash-keep cl">
 
 
 
@@ -319,7 +314,7 @@
       
         <h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><h3 id="Release版加载GIF资源时闪退（React-Native-0-25）"><a href="#Release版加载GIF资源时闪退（React-Native-0-25）" class="headerlink" title="Release版加载GIF资源时闪退（React Native 0.25）"></a>Release版加载GIF资源时闪退（React Native 0.25）</h3><p>同事在安装Debug版本时，GIF可以正常加载，项目运行也正常。但是在换成Release版本，一进入到有加载GIF资源的界面时，就直接闪退。借助Google，找到了<a href="https://github.com/facebook/fresco/issues/209" target="_blank" rel="external">解决方法</a>。</p>
 <p>找到项目的android/app/proguard-rules.pro文件，添加以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># gif crash</div><div class="line">-keep class com.facebook.imagepipeline.gif.** &#123; *; &#125;</div><div class="line">-keep class com.facebook.imagepipeline.webp.** &#123; *; &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> gif crash</div><div class="line">-keep class com.facebook.imagepipeline.gif.** &#123; *; &#125;</div><div class="line">-keep class com.facebook.imagepipeline.webp.** &#123; *; &#125;</div></pre></td></tr></table></figure>
 <a id="more"></a>
 <h3 id="在Android-Studio运行时报E-dalvikvm-Could-not-find-class-‘xxx’"><a href="#在Android-Studio运行时报E-dalvikvm-Could-not-find-class-‘xxx’" class="headerlink" title="在Android Studio运行时报E/dalvikvm: Could not find class ‘xxx’"></a>在Android Studio运行时报E/dalvikvm: Could not find class ‘xxx’</h3><p>最近被Android推送搞得头大，几天下来尝试了百度、信鸽、个推、友盟等等多个厂商的SDK，或是React Native的相关组件，一直都是报“An error occured while executing doInBackground() ”，虽然有Google，依然找不到解决办法。后来在控制台发现有“E/dalvikvm: Could not find class ‘xxx’”的信息，class指向的是自己桥接Android原生的方法，以为是跟环信的SDK冲突。多次无用尝试后，搜索了该错误信息，不想一下就找到解决办法……</p>
 <p>解决方法是在Application中添加以下方法（注意React Native 0.29以下版本没有Application，可自己添加）：</p>
@@ -433,7 +428,7 @@
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://i4.piimg.com/4851/154255b8582b8795.png"
+               src="https://avatars3.githubusercontent.com/u/13927749?v=3&u=85bcc5b3e797ff4dc5b957ff9b1cf40004195722&s=400"
                alt="CookieJ" />
           <p class="site-author-name" itemprop="name">CookieJ</p>
           <p class="site-description motion-element" itemprop="description">Be stronger.</p>
@@ -535,7 +530,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
